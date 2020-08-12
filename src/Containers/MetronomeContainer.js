@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import BpmDisplay from "../Components/BpmDisplay";
 import BpmSelector from "../Components/BpmSelector";
 import PlayPauseButton from "../Components/PlayPauseButton";
+import sound from "../beep";
 
 
 class MetronomeContainer extends Component {
@@ -24,20 +25,19 @@ class MetronomeContainer extends Component {
     handleBpmSelected(bpm){
         clearInterval(this.state.intervalId)
         this.setState({bpm});
-        let id = setInterval(this.changeBackground, this.calculateBpm(bpm))
+        let id = setInterval(this.playSpicyAndFlash, this.calculateBpm(bpm))
         this.setState({intervalId: id})
     }
 
-    changeBackground(){
+    playSpicyAndFlash() {
+        sound.play();
         var oElem = document.getElementById('html');
         oElem.style.backgroundColor = oElem.style.backgroundColor === 'purple' ? 'yellow' : 'purple';
     }
 
     handlePlayPause(){
-        // this.playSound()
-        // console.log("beep");
         if (!this.state.isPlaying) {
-            let id = setInterval(this.changeBackground, this.calculateBpm(this.state.bpm))
+            let id = setInterval(this.playSpicyAndFlash, this.calculateBpm(this.state.bpm))
             this.setState({intervalId: id})
         } else {
             clearInterval(this.state.intervalId)

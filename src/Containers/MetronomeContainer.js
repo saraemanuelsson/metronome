@@ -9,22 +9,40 @@ class MetronomeContainer extends Component {
         super(props);
         this.state = {
             bpm: 150,
-            isPlaying: false
+            isPlaying: false,
+            intervalId: null
         }
         this.handleBpmSelected = this.handleBpmSelected.bind(this)
         this.handlePlayPause = this.handlePlayPause.bind(this)
     };
 
+    calculateBpm(){
+        return 60000/this.state.bpm;
+    }
+
     handleBpmSelected(bpm){
         this.setState({bpm});
     }
 
+    greet() {
+        console.log("Hey");
+    }
+
     handlePlayPause(){
-        this.setState((prevState) => {
+
+        if (!this.state.isPlaying) {
+            let id = setInterval(this.greet, 1000)
+            this.setState({intervalId: id})
+        } else {
+            clearInterval(this.state.intervalId)
+            this.setState({intervalId: null})
+        }
+        this.setState(() => {
             return {
-                isPlaying: !this.prevState
+                isPlaying: !this.state.isPlaying
             }
         })
+
     }
     
     render() {

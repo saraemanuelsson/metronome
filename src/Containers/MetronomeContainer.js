@@ -8,16 +8,21 @@ class MetronomeContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            bpm: null,
+            bpm: 150,
             isPlaying: false
         }
+        this.handleBpmSelected = this.handleBpmSelected.bind(this)
     };
 
+    handleBpmSelected(bpm){
+        this.setState({bpm});
+    }
+    
     render() {
         return (
             <div className="metronome-container">
-                <BpmDisplay />
-                <BpmSelector />
+                <BpmDisplay bpm ={this.state.bpm} />
+                <BpmSelector onBpmSelected = {this.handleBpmSelected}/>
                 <PlayPauseButton />
             </div>
         )

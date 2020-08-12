@@ -12,10 +12,19 @@ class MetronomeContainer extends Component {
             isPlaying: false
         }
         this.handleBpmSelected = this.handleBpmSelected.bind(this)
+        this.handlePlayPause = this.handlePlayPause.bind(this)
     };
 
     handleBpmSelected(bpm){
         this.setState({bpm});
+    }
+
+    handlePlayPause(){
+        this.setState((prevState) => {
+            return {
+                isPlaying: !this.prevState
+            }
+        })
     }
     
     render() {
@@ -23,7 +32,7 @@ class MetronomeContainer extends Component {
             <div className="metronome-container">
                 <BpmDisplay bpm ={this.state.bpm} />
                 <BpmSelector onBpmSelected = {this.handleBpmSelected}/>
-                <PlayPauseButton />
+                <PlayPauseButton onPlaying={this.handlePlayPause} />
             </div>
         )
     }
